@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 23 Des 2022 pada 05.47
+-- Waktu pembuatan: 03 Jan 2023 pada 15.34
 -- Versi server: 5.7.33
 -- Versi PHP: 7.4.19
 
@@ -24,22 +24,88 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `item`
+--
+
+CREATE TABLE `item` (
+  `id_item` int(11) NOT NULL,
+  `nama_barang` varchar(200) NOT NULL,
+  `barcode` varchar(150) NOT NULL,
+  `Qty` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `item`
+--
+
+INSERT INTO `item` (`id_item`, `nama_barang`, `barcode`, `Qty`) VALUES
+(2, 'Le Mineral 600ML ', '8996001600269', ''),
+(3, 'Teh Pucuk Harum 350ML', '8996001600269', ''),
+(4, 'Aqua 600ML', '8886008101053', ''),
+(5, 'Aqua 1500ML', '8886008101091', ''),
+(6, 'Indomie Goreng ', '089686010527', '');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `kategori`
+--
+
+CREATE TABLE `kategori` (
+  `id_kategori` int(10) NOT NULL,
+  `nama_kategori` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `kategori`
+--
+
+INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
+(1, 'Minuman');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `storage`
+--
+
+CREATE TABLE `storage` (
+  `id_storage` int(11) NOT NULL,
+  `faktur` varchar(100) NOT NULL,
+  `nama_barang` varchar(200) NOT NULL,
+  `harga_barang` int(20) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `qty` int(20) NOT NULL,
+  `harga_beli` int(20) NOT NULL,
+  `harga_jual` int(20) NOT NULL,
+  `exp_date` date NOT NULL,
+  `barcode` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `tambah_inbound`
 --
 
 CREATE TABLE `tambah_inbound` (
-  `id_inbound` int(10) NOT NULL,
-  `faktur` int(16) NOT NULL,
-  `nama_agen` varchar(120) NOT NULL,
-  `total_harga` varchar(10) NOT NULL,
-  `tanggal` date NOT NULL,
-  `nama_barang` varchar(200) NOT NULL,
-  `qty` int(10) NOT NULL,
-  `harga_barang` varchar(10) NOT NULL,
-  `harga_jual` varchar(10) NOT NULL,
-  `exp_date` date NOT NULL,
-  `barcode` varchar(250) NOT NULL
+  `id_inbound` int(11) NOT NULL,
+  `faktur` varchar(100) NOT NULL,
+  `nama_agen` varchar(250) NOT NULL,
+  `total_harga` varchar(200) NOT NULL,
+  `tanggal` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tambah_inbound`
+--
+
+INSERT INTO `tambah_inbound` (`id_inbound`, `faktur`, `nama_agen`, `total_harga`, `tanggal`) VALUES
+(1, 'SB202212051200JKT', 'Toko Sahabat', '5.000.000', '2022-12-05'),
+(2, 'INB20221229194100201JKT', 'Indogrosir', '1.000.000', '2022-12-15'),
+(4, 'INB20221231221300202JKT', 'asin', '400.000', '2022-12-31'),
+(5, 'INB20221231221400203JKT', 'asong', '1.400.000', '2022-12-31'),
+(6, 'INB20221231223200204JKT', 'asong', '2.400.000', '2022-12-31');
 
 -- --------------------------------------------------------
 
@@ -90,6 +156,18 @@ INSERT INTO `user_role` (`id`, `role`) VALUES
 --
 
 --
+-- Indeks untuk tabel `item`
+--
+ALTER TABLE `item`
+  ADD PRIMARY KEY (`id_item`);
+
+--
+-- Indeks untuk tabel `kategori`
+--
+ALTER TABLE `kategori`
+  ADD PRIMARY KEY (`id_kategori`);
+
+--
 -- Indeks untuk tabel `tambah_inbound`
 --
 ALTER TABLE `tambah_inbound`
@@ -112,10 +190,22 @@ ALTER TABLE `user_role`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `item`
+--
+ALTER TABLE `item`
+  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `kategori`
+--
+ALTER TABLE `kategori`
+  MODIFY `id_kategori` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT untuk tabel `tambah_inbound`
 --
 ALTER TABLE `tambah_inbound`
-  MODIFY `id_inbound` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_inbound` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
