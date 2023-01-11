@@ -109,11 +109,9 @@ margin: 10px 10px 10px 300px;">
 
                 <!-- nama barang -->
                 <div class="form-group m-2">
-                    <label>id inbound</label>
                     <?php foreach( $inbound as $barangmasuk) { ?>
-                        <?= $id_inbound = $barangmasuk->id_inbound  ?>
+                    <input type="hidden" name="id_inbound" class="form-control" value="<?= $barangmasuk->id_inbound  ?>">
                     <?php } ?> 
-                    <input type="text" name="id_inbound" class="form-control" value="<?= $id_inbound ?>" readonly>
                 </div> 
                 <!-- end nama barang -->
 
