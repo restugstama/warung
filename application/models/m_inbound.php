@@ -74,5 +74,23 @@ class M_inbound extends CI_Model
         return $this->db->get()->result();
     }
 
+    // Inbound Detail
+    public function input_inbound_detail($data) 
+    {
+        $this->db->insert('tb_ibound_detail',$data);
+    }
+
+    public function join_inbound_detail($faktur)
+    {
+        $this->db->select('tb_ibound_detail.*, tambah_inbound.*, item.nama_barang, item.harga_jual, item.barcode, kategori.nama_kategori');
+        $this->db->from('tb_ibound_detail');
+        $this->db->join('tambah_inbound', 'tambah_inbound.id_inbound=tb_ibound_detail.id_inbound');
+        $this->db->join('item', 'item.id_item=tb_ibound_detail.id_item');
+        $this->db->join('kategori', 'kategori.id_kategori=item.id_kategori');
+        $this->db->order_by('tb_ibound_detail.id','DESC');
+        $this->db->where('tb_ibound_detail.id_inbound', $faktur);
+        return $this->db->get()->result();
+    }
+
 }  
  

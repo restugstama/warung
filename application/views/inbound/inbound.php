@@ -49,7 +49,7 @@
                                             </td>
                                             <td>
                                                 <span onclick="javascript return confirm('Tambah data?')" >
-                                                    <?= anchor('inbound/inbound/insert_data/'.$barangmasuk->faktur,
+                                                    <?= anchor('inbound/inbound/insert_data/'.$barangmasuk->id_inbound,
                                                     '<div class="btn btn-primary btn-xs" >
                                                     Tambah Data
                                                     </div>')

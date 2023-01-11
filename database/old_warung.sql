@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 11, 2023 at 04:29 PM
--- Server version: 5.7.24
--- PHP Version: 7.4.27
+-- Waktu pembuatan: 11 Jan 2023 pada 14.01
+-- Versi server: 5.7.33
+-- Versi PHP: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -25,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `item`
+-- Struktur dari tabel `item`
 --
 
 CREATE TABLE `item` (
@@ -33,20 +32,20 @@ CREATE TABLE `item` (
   `nama_barang` varchar(200) NOT NULL,
   `id_kategori` int(11) NOT NULL,
   `barcode` varchar(150) NOT NULL,
-  `harga_jual` varchar(50) NOT NULL
+  `Qty` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `item`
+-- Dumping data untuk tabel `item`
 --
 
-INSERT INTO `item` (`id_item`, `nama_barang`, `id_kategori`, `barcode`, `harga_jual`) VALUES
-(3, 'mie', 2, '123', '400000');
+INSERT INTO `item` (`id_item`, `nama_barang`, `id_kategori`, `barcode`, `Qty`) VALUES
+(3, 'mie', 2, '123', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kategori`
+-- Struktur dari tabel `kategori`
 --
 
 CREATE TABLE `kategori` (
@@ -55,7 +54,7 @@ CREATE TABLE `kategori` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `kategori`
+-- Dumping data untuk tabel `kategori`
 --
 
 INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
@@ -65,7 +64,7 @@ INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `storage`
+-- Struktur dari tabel `storage`
 --
 
 CREATE TABLE `storage` (
@@ -84,7 +83,7 @@ CREATE TABLE `storage` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tambah_inbound`
+-- Struktur dari tabel `tambah_inbound`
 --
 
 CREATE TABLE `tambah_inbound` (
@@ -96,7 +95,7 @@ CREATE TABLE `tambah_inbound` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tambah_inbound`
+-- Dumping data untuk tabel `tambah_inbound`
 --
 
 INSERT INTO `tambah_inbound` (`id_inbound`, `faktur`, `nama_agen`, `total_harga`, `tanggal`) VALUES
@@ -109,32 +108,7 @@ INSERT INTO `tambah_inbound` (`id_inbound`, `faktur`, `nama_agen`, `total_harga`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_ibound_detail`
---
-
-CREATE TABLE `tb_ibound_detail` (
-  `id` int(11) NOT NULL,
-  `id_inbound` int(11) NOT NULL,
-  `id_item` int(11) NOT NULL,
-  `qty` int(200) NOT NULL,
-  `harga` int(11) NOT NULL,
-  `exp_date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tb_ibound_detail`
---
-
-INSERT INTO `tb_ibound_detail` (`id`, `id_inbound`, `id_item`, `qty`, `harga`, `exp_date`) VALUES
-(1, 1, 3, 5, 200000, '2023-01-11'),
-(2, 1, 3, 5, 200000, '2023-01-12'),
-(3, 2, 3, 5, 200000, '2023-01-11'),
-(4, 6, 3, 10, 20000, '2023-01-26');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -150,7 +124,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id`, `nama`, `email`, `tgl_lahir`, `image`, `role_id`, `is_active`, `password`, `date_created`) VALUES
@@ -159,7 +133,7 @@ INSERT INTO `user` (`id`, `nama`, `email`, `tgl_lahir`, `image`, `role_id`, `is_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_role`
+-- Struktur dari tabel `user_role`
 --
 
 CREATE TABLE `user_role` (
@@ -168,7 +142,7 @@ CREATE TABLE `user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user_role`
+-- Dumping data untuk tabel `user_role`
 --
 
 INSERT INTO `user_role` (`id`, `role`) VALUES
@@ -180,101 +154,89 @@ INSERT INTO `user_role` (`id`, `role`) VALUES
 --
 
 --
--- Indexes for table `item`
+-- Indeks untuk tabel `item`
 --
 ALTER TABLE `item`
   ADD PRIMARY KEY (`id_item`),
   ADD KEY `id_kategori` (`id_kategori`);
 
 --
--- Indexes for table `kategori`
+-- Indeks untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
   ADD PRIMARY KEY (`id_kategori`);
 
 --
--- Indexes for table `storage`
+-- Indeks untuk tabel `storage`
 --
 ALTER TABLE `storage`
   ADD PRIMARY KEY (`id_storage`),
   ADD KEY `id_inbound` (`id_inbound`);
 
 --
--- Indexes for table `tambah_inbound`
+-- Indeks untuk tabel `tambah_inbound`
 --
 ALTER TABLE `tambah_inbound`
   ADD PRIMARY KEY (`id_inbound`);
 
 --
--- Indexes for table `tb_ibound_detail`
---
-ALTER TABLE `tb_ibound_detail`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_role`
+-- Indeks untuk tabel `user_role`
 --
 ALTER TABLE `user_role`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `item`
+-- AUTO_INCREMENT untuk tabel `item`
 --
 ALTER TABLE `item`
   MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `kategori`
+-- AUTO_INCREMENT untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
   MODIFY `id_kategori` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `tambah_inbound`
+-- AUTO_INCREMENT untuk tabel `tambah_inbound`
 --
 ALTER TABLE `tambah_inbound`
   MODIFY `id_inbound` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `tb_ibound_detail`
---
-ALTER TABLE `tb_ibound_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `user_role`
+-- AUTO_INCREMENT untuk tabel `user_role`
 --
 ALTER TABLE `user_role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `item`
+-- Ketidakleluasaan untuk tabel `item`
 --
 ALTER TABLE `item`
   ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`);
 
 --
--- Constraints for table `storage`
+-- Ketidakleluasaan untuk tabel `storage`
 --
 ALTER TABLE `storage`
   ADD CONSTRAINT `storage_ibfk_1` FOREIGN KEY (`id_inbound`) REFERENCES `tambah_inbound` (`id_inbound`);
