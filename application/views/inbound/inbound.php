@@ -115,21 +115,33 @@
               </div>
               <div class="modal-body">
                 <div class="row">
-                        <div class="col">
+                        <div class="col"> 
                             <!-- Kategori -->
                                     <div class="form-group m-2">
                                       <input 
                                       type="text" 
                                       class="form-control form-control-user col-sm-8 " 
-                                      id="nama_kategori" name="nama_item" 
-                                      placeholder="Nama Item" style="margin:auto;" value="<?= set_value('nama_item');?>">
+                                      id="nama_barang" name="nama_barang" 
+                                      placeholder="Nama Item" style="margin:auto;" value="<?= set_value('nama_barang');?>">
                                     </div>
                                     <div class="form-group m-2">
-                                      <input 
+                                      <input  
                                       type="text" 
                                       class="form-control form-control-user col-sm-8 " 
                                       id="barcode" name="barcode" 
                                       placeholder="Barcode" style="margin:auto;" value="<?= set_value('barcode');?>">
+                                    </div>
+                                    <div class="form-group m-2">
+                                        <label>Kategori</label>
+                                        <select name="id_kategori" class="form-control">
+                                            <option>Pilih Kategori</option>
+                                                <?php
+                                                foreach ($datakategori as $kategori) :?>
+                                                <option value="<?= $kategori->id_kategori ?>">
+                                                    <?= $kategori->nama_kategori ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
                                 <!-- end Nomor Faktur -->
                         </div>

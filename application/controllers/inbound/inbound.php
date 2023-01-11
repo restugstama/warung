@@ -12,7 +12,8 @@ class Inbound extends CI_controller{
 
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 		$data['inbound'] = $this->m_inbound->view()->result();
-
+		$data['datakategori'] = $this->m_inbound->tampil_kategori();
+		$data['item'] = $this->m_inbound->join_item(); 
 		$data['kode'] = $this->m_inbound->faktur();
 		$data['title'] = 'Tambah Data Inbound';
 		$this->load->view('temp_us/header',$data);
@@ -34,14 +35,14 @@ class Inbound extends CI_controller{
 			'faktur'		=> $faktur, 
 			'nama_agen'		=> $nama_agen,
 			'total_harga'	=> $total_harga, 
-			'tanggal'		=> $tanggal
+			'tanggal'		=> $tanggal 
 		);  
 
 		$this->m_inbound->input_data($data, 'tambah_inbound');
 		redirect('inbound/inbound');
 	}
  
-	public function tambah_kategori()
+	public function tambah_kategori() 
 	{
 		$nama_kategori		= $this->input->post('nama_kategori');
 
@@ -50,13 +51,15 @@ class Inbound extends CI_controller{
 		redirect('inbound/inbound');
 	}
 
-	public function tambah_item() 
+	public function tambah_item()  
 	{
-		$nama_item		= $this->input->post('nama_item');
-		$barcode		= $this->input->post('barcode');
+		$nama_barang		= $this->input->post('nama_barang');
+		$barcode			= $this->input->post('barcode');
+		$id_kategori		= $this->input->post('id_kategori');
 
-		$data = array( 'nama_item' => $nama_item,
-		'barcode' => $barcode );
+		$data = array( 'nama_barang' => $nama_barang, 'barcode' => $barcode,
+						'id_kategori' => $id_kategori
+						 );
 		$this->m_inbound->input_item($data, 'item');
 		redirect('inbound/inbound');
 	}
@@ -69,12 +72,11 @@ class Inbound extends CI_controller{
 		}
 		$data['title'] = 'Tambah data';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
-		$where = array('faktur' => $faktur);
-		$data['inbound'] = $this->m_inbound->inset_data($where, 'tambah_inbound')->result();
-
-		$data['databarang'] = $this->m_stok->join_stok()->result();
-
+ 
+		$where = array('faktur' => $faktur); 
+		$data['datakategori'] = $this->m_stok->tampil_kategori();
+		$data['dataitem'] = $this->m_stok->tampil_item();
+		$data['inbound'] = $this->m_inbound->inset_data($where, 'tambah_inbound')->result();		 
 
 		$this->load->view('temp_us/header',$data);
 		$this->load->view('temp_us/topbar', $data);

@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/') ?>css/table.css">
  <div class="row" style="    width: 1200px;
     margin: 10px 10px 10px 300px;">
     <div class="col-xl-11 col-lg-7">
@@ -21,40 +22,19 @@
                             <!-- End Tambah Data -->     
                         </div>
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered">
+                            <table id="dtHorizontalExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                                 <thead>
                                     <th>No</th>
-                                    <th>Faktur</th>
                                     <th>Nama Barang</th> 
                                     <th>Qty</th>
-                                    <th>Harga Beli</th>
+                                    <th>Harga Beli</th> 
                                     <th>Harga Jual</th>
                                     <th>Exp Date</th>
                                     <th>Barcode</th>
                                     <th>Tools</th>
                                 </thead>
                                 <tbody>  
-                                    <?php $no=1; foreach ($stok as $barangmasuk) : ?>
-                                        <tr>
-                                            <td><?php echo $no++ ?></td>
-                                            <td><?php echo $barangmasuk->faktur  ?></td>
-                                            <td><?php echo $barangmasuk->nama_agen ?></td>
-                                            <td><?php echo $barangmasuk->total_harga ?></td>
-                                            <td><?php echo $barangmasuk->tanggal ?></td>
-                                            <td>
-                                                <?= $user['nama']; ?>
-                                            </td>
-                                            <td>
-                                                <span onclick="javascript return confirm('Tambah data?')" >
-                                                    <?= anchor('inbound/inbound/insert_data/'.$barangmasuk->id_inbound,
-                                                    '<div class="btn btn-primary btn-xs" >
-                                                    Tambah Data
-                                                    </div>')
-                                                    ?>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
+
                                 </tbody>
                             </table>
                         </div>
@@ -62,7 +42,11 @@
                 </div>
             </div>
 
-    <!-- Modal input data-->
+
+ </div>
+</div>
+
+<!-- Modal input data-->
     <div class="modal fade" id="input_data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <form method="post" action="<?= base_url('inbound/inbound/tambah_kategori') ?>" >
           <div class="modal-dialog" role="document">
@@ -72,31 +56,76 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-              </div>
-              <div class="modal-body">
+            </div>
+            <div class="modal-body">
                 <div class="row">
-                        <div class="col">
-                            <!-- faktur -->
-                                    <div class="form-group m-2">
-                        <?php foreach( $databarang as $barangmasuk) { ?>
-                            <input type="text" class="form-control form-control-user col-sm-8 " id="Faktur" name="faktur" placeholder="" style="margin:auto;" hid value="<?= $barangmasuk->faktur  ?>" hidden>
-                        <?php } ?>
-                                    </div>
-                                <!-- end Nomor Faktur -->
-                                <!-- faktur -->
-                                    <div class="form-group m-2">
-                                        <label>Nama Barang</label>
-                                      <select name="id_storage" class="form-control" >
-                                        <?php
-                                        foreach ($databarang as $barang) ;
-                                        ?>
-                                        <option value="<?= $item->id_item ?>" >
-                                            <?= $item->nama_barang ?>
-                                        </option>
-                                      </select>
-                                    </div>
-                                <!-- end Nomor Faktur -->
-                        </div>
+                    <div class="col">
+                        <!-- Kategori -->
+                            <div class="form-group m-2">
+                                <label>kategori barang</label>
+                                <select name="kategori" class="form-control">
+                                    <option>Pilih kategori</option>
+                                    <?php 
+                                        foreach ($datakategori as $kategori) :?>
+                                        <option value="<?= $kategori->id_kategori ?>"><?= $kategori->nama_kategori ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        <!-- end kategori --> 
+                        <!-- nama barang -->
+                            <div class="form-group m-2">
+                                <label>nama barang</label>
+                                <select name="nama_barang" class="form-control">
+                                    <option>Pilih barang</option>
+                                    <?php 
+                                        foreach ($dataitem as $item ) :?>
+                                        <option value="<?= $item->id_item ?>"><?= $item->nama_barang ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        <!-- end nama barang -->
+
+                        <!-- Qty -->
+                            <div class="form-group m-2">
+                                <label>Jumlah Qty Barang</label>
+                                <input type="text" name="qty" class="form-control" value="<?= set_value('qty') ?>" >
+                            </div> 
+                        <!-- end QTY -->
+
+                        <!-- Harga beli -->
+                            <div class="form-group m-2">
+                                <label>Harga beli</label>
+                                <input type="text" name="harga_beli" class="form-control" value="<?= set_value('harga_beli') ?>" >
+                            </div>
+                        <!-- end Harga beli -->
+
+                        <!-- Harga jual -->
+                            <div class="form-group m-2">
+                                <label>Harga jual</label>
+                                <input type="text" name="harga_jual" class="form-control" value="<?= set_value('harga_jual') ?>" >
+                            </div>
+                        <!-- end Harga jual -->
+
+                        <!-- Exp Date -->
+                            <div class="form-group m-2">
+                                <label>Exp date</label>
+                                <input type="date" name="exp_date" class="form-control" value="<?= set_value('harga_jual') ?>" >
+                            </div>
+                        <!-- end Exp date -->
+
+                        <!-- Barcode -->
+                            <div class="form-group m-2">
+                                <label>barcode</label>
+                                <select name="barcode" class="form-control">
+                                    <option>Pilih barcode</option>
+                                    <?php 
+                                        foreach ($dataitem as $item ) :?>
+                                        <option value="<?= $item->id_item?>"><?= $item->barcode ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        <!-- end barcode -->
+                    </div>
 
                 </div>
               </div>
@@ -108,5 +137,15 @@
           </div>
         </form>
     </div>
- </div>
-</div>
+<!-- end input data -->
+
+
+
+<script>
+    $(document).ready(function () {
+  $('#dtHorizontalExample').DataTable({
+    "scrollX": true
+  });
+  $('.dataTables_length').addClass('bs-select');
+});
+</script>

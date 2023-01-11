@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 03 Jan 2023 pada 15.34
+-- Waktu pembuatan: 11 Jan 2023 pada 14.01
 -- Versi server: 5.7.33
 -- Versi PHP: 7.4.19
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `item` (
   `id_item` int(11) NOT NULL,
   `nama_barang` varchar(200) NOT NULL,
+  `id_kategori` int(11) NOT NULL,
   `barcode` varchar(150) NOT NULL,
   `Qty` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -38,12 +39,8 @@ CREATE TABLE `item` (
 -- Dumping data untuk tabel `item`
 --
 
-INSERT INTO `item` (`id_item`, `nama_barang`, `barcode`, `Qty`) VALUES
-(2, 'Le Mineral 600ML ', '8996001600269', ''),
-(3, 'Teh Pucuk Harum 350ML', '8996001600269', ''),
-(4, 'Aqua 600ML', '8886008101053', ''),
-(5, 'Aqua 1500ML', '8886008101091', ''),
-(6, 'Indomie Goreng ', '089686010527', '');
+INSERT INTO `item` (`id_item`, `nama_barang`, `id_kategori`, `barcode`, `Qty`) VALUES
+(3, 'mie', 2, '123', '');
 
 -- --------------------------------------------------------
 
@@ -61,7 +58,8 @@ CREATE TABLE `kategori` (
 --
 
 INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
-(1, 'Minuman');
+(1, 'Minuman'),
+(2, 'Makanan');
 
 -- --------------------------------------------------------
 
@@ -71,7 +69,7 @@ INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
 
 CREATE TABLE `storage` (
   `id_storage` int(11) NOT NULL,
-  `faktur` varchar(100) NOT NULL,
+  `id_inbound` int(11) NOT NULL,
   `nama_barang` varchar(200) NOT NULL,
   `harga_barang` int(20) NOT NULL,
   `id_user` int(11) NOT NULL,
@@ -159,13 +157,21 @@ INSERT INTO `user_role` (`id`, `role`) VALUES
 -- Indeks untuk tabel `item`
 --
 ALTER TABLE `item`
-  ADD PRIMARY KEY (`id_item`);
+  ADD PRIMARY KEY (`id_item`),
+  ADD KEY `id_kategori` (`id_kategori`);
 
 --
 -- Indeks untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
   ADD PRIMARY KEY (`id_kategori`);
+
+--
+-- Indeks untuk tabel `storage`
+--
+ALTER TABLE `storage`
+  ADD PRIMARY KEY (`id_storage`),
+  ADD KEY `id_inbound` (`id_inbound`);
 
 --
 -- Indeks untuk tabel `tambah_inbound`
@@ -193,13 +199,13 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT untuk tabel `item`
 --
 ALTER TABLE `item`
-  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_kategori` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `tambah_inbound`
@@ -218,6 +224,22 @@ ALTER TABLE `user`
 --
 ALTER TABLE `user_role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `item`
+--
+ALTER TABLE `item`
+  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`);
+
+--
+-- Ketidakleluasaan untuk tabel `storage`
+--
+ALTER TABLE `storage`
+  ADD CONSTRAINT `storage_ibfk_1` FOREIGN KEY (`id_inbound`) REFERENCES `tambah_inbound` (`id_inbound`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
